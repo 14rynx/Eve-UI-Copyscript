@@ -19,7 +19,7 @@ You need Python 3.xx to use this script, Python can be found at [python.org](htt
 
 # To Note
 - You can create a backup of these ```master_char.dat``` and ```master_user.dat``` files and use them later, however it is not clear if their syntax never changes with never versions of eve
-  - This also works on the respective folders for SISI and similar
-  - You might also rename the files in this script and not create  ``` master_char.dat``` and ```master_user.dat``` at all
+- This also works on the respective folders for SISI and similar
+- You might also rename the files in this script and not create  ``` master_char.dat``` and ```master_user.dat``` at all
 
 For any problems contact Larynx Austrene ingame
