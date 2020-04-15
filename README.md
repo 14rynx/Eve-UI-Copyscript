@@ -1,5 +1,5 @@
 # Eve-UI-Copyscript
-Simple script that alows you to automatically copy your overview setting to multiple chars
+Simple script that alows you to automatically copy your overview, windows and hotkeys to multiple chars
 
 # Recuirements
 You need Python 3.xx to use this script, Python can be found at [python.org](https://www.python.org/)
