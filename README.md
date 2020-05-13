@@ -7,14 +7,14 @@ You need Python 3.xx to use this script, Python can be found at [python.org](htt
 # First use
 1. Download the replace.py and open it with a text editor
 2. Change the 
-```user_master = "" ```
-```char_master = ""```
-To the character that you want to copy from 
+  ```user_master = "" ```
+  ```char_master = ""```
+  To the character that you want to copy from*
+3. Run ```replace.py```
 
-( The easiest way to get both is that you log in the desired character and go to
+*( The easiest way to get both is that you log in the desired character and go to
 ```%LOCALAPPDATA%\CCP\EVE\c_program_files_eve_sharedcache_tq_tranquility\settings_Default```
 and check wich user_xy and char_xy file got changed when you logged in. The XY at the end is the desired ID respectively)
-3. Run ```replace.py```
 
 # Later use
 - Whenever you want your overview copied again just run ```replace.py```
