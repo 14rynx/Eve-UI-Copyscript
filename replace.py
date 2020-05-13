@@ -1,64 +1,55 @@
-# This is made to copy Eve Settings to chars
-
-# To use:
-# 1. navigate to C:\Users\"Your Username"\AppData\Local\CCP\EVE\c_eve_sharedcache_tq_tranquility\settings_Default
-#    here the settings for Overview and Shortcuts are safed
-# 2. Find out witch settings you want to copy to all other chars, launch said character and figuring out witch files got written to e.g "last updated"
-# 3. Copy the settings for that character and name them "master_char.dat" and "master_user.dat" respectively
-# 4. Run this script it will  replace all core_user_xxx.dat and core_char_xxx.dat files by master_char.dat and master_user.dat
-# Finally your settings should appear on any char that had such files in this directory.
-
-# To Note:
-#  - You can create a backup of these "master_char.dat" and "master_user.dat" files and use them later, however it is not clear if their syntax never changes with never versions of eve
-#  - This also works on the respective folders for SISI and similar
-#  - You might also rename the files in this script and not create  "master_char.dat" and "master_user.dat" at all
-
+# ----------Eve UI Copyscript--------------------------
+# Requirements: Python 3
 # For any problems contact Larynx Austrene ingame
 
 import os
 import shutil
 import ctypes, sys
 
-def is_admin():
-    try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
+#------------Your info goes here------------------------
+# In order for this to find the right character to copy this needs your Character ID and user ID
+# The user ID is usually easy to find, just look in your zkill url. The user id is usually a bit harder to find.
+# The easiest way to get both is that you log in the desired character and go to
+# %LOCALAPPDATA%\CCP\EVE\c_program_files_eve_sharedcache_tq_tranquility\settings_Default
+# and check wicht user_xy and char_xy file got changed when you logged in. The XY at the end is the desired ID respectively
+user_master = "15402804"
+char_master = "2114060571"
 
-if is_admin(): # Find out if this script is run as admin, to circumvent file permission issues
+# In case you or sharedcache folders are at a different location you can change the paths here
+tq_dir = os.path.join(os.getenv('LOCALAPPDATA'), "CCP\EVE\c_program_files_eve_sharedcache_tq_tranquility\settings_Default")
+sisi_dir =  os.path.join(os.getenv('LOCALAPPDATA'), "CCP\EVE\c_program_files_eve_sharedcache_sisi_singularity\settings_Default")
+#-------------end of your info--------------------------
 
-	# Gets the directory of this file, which is not always cwd
-	use_dir = os.path.dirname(os.path.realpath(__file__))
-	print("Searching in directory: {}".format(use_dir))
+def replace(files, char_master_path, user_master_path, dest_dir):
+                    for file in files:
+                        
+                        if "core_char" in file and not char_master in file:
+                                shutil.copy(char_master_path, os.path.join(dest_dir, file))
+                                print("Overwriten: {}".format(file))
 
-	# These filenames might be replaced by the files you want to use as master
-	char_master = os.path.join(use_dir, "master_char.dat")
-	user_master = os.path.join(use_dir, "master_user.dat")
+                        if "core_user" in file and not user_master in file:
+                                shutil.copy(user_master_path, os.path.join(dest_dir, file))
+                                print("Overwriten: {}".format(file)
 
-	try: # Try-except block, so that in case of an error you still get some output, that I might debug at some point
-		for root, dirs, files in os.walk(use_dir):
-			for file in files:
+# Generating Paths to coresponding files
+char_master_path = os.path.join(tq_dir, "core_char_{}.dat".format(char_master))
+user_master_path = os.path.join(tq_dir, "core_user_{}.dat".format(user_master))
 
-				if "core_char" in file:
-					shutil.copy(char_master, file)
-					print("Overwriten: {}".format(file))
+try: # Try-except block, so that in case of an error you still get some output, that I might debug at some point
+        print("Tranquility")
+        for root, dirs, files in os.walk(tq_dir):
+                replace(files, char_master_path, user_master_path, tq_dir)
 
-				if "core_user" in file:
-					shutil.copy(user_master, file)
-					print("Overwriten: {}".format(file))
-	except Exception as e:
-		print("An Error occurred while: copying: {}".format(str(e)))
-	else:	
-		print("Done")
+        # Comment out the next 3 lines if you dont want to copy the settings to singularity              
+        print("Singularity")
+        for root, dirs, files in os.walk(sisi_dir):
+                replace(files, char_master_path, user_master_path, sisi_dir)
+                
+except Exception as e:
+        print("An Error occurred while: copying: {}".format(str(e)))
+else:	
+        print("Done")
 
-	input("Press any key to continue ...")
+# Comment out this last line if you run it by script and want the shell to auto-close
+input("Press any key to continue ...")
 	
-else: # If this is not already admin elevate and run again
-
-	print("Running as admin ...")
-	try: # Try-except block, so that in case of an error you still get some output, that I might debug at some point
-		ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
-	except Exception as e:
-		print("An Error occurred  while elevating: {}".format(str(e)))
-
-
