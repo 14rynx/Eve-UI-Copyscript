@@ -29,7 +29,7 @@ def replace(files, char_master_path, user_master_path, dest_dir):
 
                         if "core_user" in file and not user_master in file:
                                 shutil.copy(user_master_path, os.path.join(dest_dir, file))
-                                print("Overwriten: {}".format(file)
+                                print("Overwriten: {}".format(file))
 
 # Generating Paths to coresponding files
 char_master_path = os.path.join(tq_dir, "core_char_{}.dat".format(char_master))
