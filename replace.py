@@ -8,7 +8,7 @@ import ctypes, sys
 
 #------------Your info goes here------------------------
 # In order for this to find the right character to copy this needs your Character ID and user ID
-# The user ID is usually easy to find, just look in your zkill url. The user id is usually a bit harder to find.
+# The character ID is usually easy to find, just look in your zkill url. The user id is usually a bit harder to find.
 # The easiest way to get both is that you log in the desired character and go to
 # %LOCALAPPDATA%\CCP\EVE\c_program_files_eve_sharedcache_tq_tranquility\settings_Default
 # and check wicht user_xy and char_xy file got changed when you logged in. The XY at the end is the desired ID respectively
